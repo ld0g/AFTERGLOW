@@ -2,11 +2,15 @@
 // blackout and chaos modes added to this one. all serial monitor functions to be removed. next version will be AFTERGLOW 1.0
 //we can map each side as a percentage, making it scalable to bigger led strips.
 //10/10/2026: blackout mode finished. unlock with 5s push on si drive switch. 
-//chaos mode started
 //added a fade to black to end of hello. looks nicer.
 
 #include <FastLED.h> 
+//colours and brightness
 const uint8_t brightness = 50;
+CRGB acidGreen = CRGB(180, 255, 0);
+CRGB pink = CRGB(255, 60, 120);
+CRGB white = CRGB(255, 255, 255);
+CRGB blue = CRGB(0, 0, 255);
 
 #define FRONT_PIN  9    //map my digital output pins 
 #define RIGHT_PIN  10
@@ -29,7 +33,7 @@ enum Mode {
   chaosmode,
   kawaiimode,
 };
-enum SwitchState {  //enum is a way of creating a new type of variable that can only have certain values. in this case, the switch can only be left, push, right, rest or unknown.
+enum SwitchState {  
   switchLeft,
   switchPush,
   switchRight,
@@ -123,8 +127,9 @@ void handleSiDriveSwitch()
         currentMode = stealthmode;
         longPressTriggered = true;
 
-        Serial.println("BLACKOUT DISENGAGED");
+        //Serial.println("BLACKOUT DISENGAGED");
       }
+      previousSwitchState = currentSwitchState;
       return;
   }
 
@@ -139,25 +144,20 @@ void handleSiDriveSwitch()
       case switchLeft:
         blackoutActive = true;
         helloActive = false;
-        Serial.println("BLACKOUT ENGAGED");
         break;
       case switchPush:
         currentMode = normalmode;
-        Serial.println("NORMAL MODE");
         break;
       case switchRight:
         chaosStartTime = millis();
         currentMode = chaosmode;
-        Serial.println("CHAOS MODE");
         break;
-
       default:
-        break;
+      break;
     }
 
     longPressTriggered = true;
   }
-
   // Released
   if (currentSwitchState == switchRest &&
       previousSwitchState != switchRest)
@@ -169,19 +169,14 @@ void handleSiDriveSwitch()
         case switchLeft:
           currentMode = stealthmode;
           stealth();
-          Serial.println("stealth mode. shhhh");
           break;
-
         case switchPush:
           helloFunction();
           break;
-
         case switchRight:
-          Serial.println("KAWAII MODE");
           currentMode = kawaiimode;
           kawaii();
           break;
-
         default:
           break;
       }
@@ -211,7 +206,6 @@ void helloFunction(){
   previousMode = currentMode; //remember what mode we were in before hello was activated
   helloActive = true; //helloactive is run from loop.
   helloStartTime = millis();
-  Serial.println("hello started");
 }
 void runHello()
 {
@@ -227,22 +221,17 @@ void runHello()
 
     // Start each frame in darkness
     FastLED.clear();
-
     // Sweep position: 0.0 = front, 1.0 = rear
     float sweep = elapsed / (float)duration;
-
     const unsigned long fadeDuration = 300;
-
 uint8_t fade = 255;
 
 if (elapsed > duration - fadeDuration)
 {
     fade = map(elapsed, duration - fadeDuration, duration, 255, 0);
 }
-
     // Width of the rainbow trail
     const float trailWidth = 0.30f;
-
     // FRONT: first 15% of the journey
     for (int i = 0; i < FRONT_LEDS; i++)
     {
@@ -255,7 +244,6 @@ if (elapsed > duration - fadeDuration)
             frontLeds[i] = CHSV(hue, 255, 255);
         }
     }
-
     // SIDES: 15% to 85%
     for (int i = 0; i < RIGHT_LEDS; i++)
     {
@@ -270,7 +258,6 @@ if (elapsed > duration - fadeDuration)
             rightLeds[i] = CHSV(hue, 255, 255);
         }
     }
-
     for (int i = 0; i < LEFT_LEDS; i++)
     {
         float position = 0.15f +
@@ -284,7 +271,6 @@ if (elapsed > duration - fadeDuration)
             leftLeds[i] = CHSV(hue, 255, 255);
         }
     }
-
     // REAR: final 15%
     for (int i = 0; i < REAR_LEDS; i++)
     {
@@ -300,11 +286,10 @@ if (elapsed > duration - fadeDuration)
         }
     }
     fadeToBlackBy(frontLeds, FRONT_LEDS, 255 - fade);
-fadeToBlackBy(rightLeds, RIGHT_LEDS, 255 - fade);
-fadeToBlackBy(rearLeds, REAR_LEDS, 255 - fade);
-fadeToBlackBy(leftLeds, LEFT_LEDS, 255 - fade);
+  fadeToBlackBy(rightLeds, RIGHT_LEDS, 255 - fade);
+  fadeToBlackBy(rearLeds, REAR_LEDS, 255 - fade);
+  fadeToBlackBy(leftLeds, LEFT_LEDS, 255 - fade);
 }
-
 void stealth()
 {
   FastLED.clear();
@@ -312,33 +297,22 @@ void stealth()
 
 void normal()
 {
-  
-    CRGB pink = CRGB(255, 60, 120);
-
     fill_solid(frontLeds, FRONT_LEDS, pink);
     fill_solid(rightLeds, RIGHT_LEDS, pink);
     fill_solid(rearLeds, REAR_LEDS, pink);
     fill_solid(leftLeds, LEFT_LEDS, pink);
-  
 }
 void kawaii()
 {
-    const CRGB pink = CRGB(255, 60, 120);
-    const CRGB blue = CRGB(0, 0, 255);
-
     const unsigned long cycleTime = 9000;
-
     // Position from 0.0 (front) to 1.0 (rear)
     float position = (millis() % cycleTime) /
                      (float)cycleTime;
-
     // Width of the travelling blue band
     const float bandWidth = 0.28f;
-
     // Front and rear remain pink
     fill_solid(frontLeds, FRONT_LEDS, pink);
     fill_solid(rearLeds, REAR_LEDS, pink);
-
     // Side zones animate independently of LED count
     for (int i = 0; i < RIGHT_LEDS; i++)
     {
@@ -353,7 +327,6 @@ void kawaii()
             pink, blue, (uint8_t)(blendAmount * 255)
         );
     }
-
     for (int i = 0; i < LEFT_LEDS; i++)
     {
         float pixelPosition = i / (float)(LEFT_LEDS - 1);
@@ -372,13 +345,9 @@ void drawPerimeterBand(float progress)
 {
     const float bandWidth = 0.10f;
     const int resolution = 128;
-
-    CRGB white = CRGB(255, 255, 255);
-
     for (int i = 0; i < resolution; i++)
     {
         float offset = (float)i / resolution * bandWidth;
-
         setPerimeterPixel(progress + offset, white);
     }
 }
@@ -386,13 +355,10 @@ void setPerimeterPixel(float position, CRGB colour)
 {
     const int totalLeds =
         FRONT_LEDS + RIGHT_LEDS + REAR_LEDS + LEFT_LEDS;
-
     // Wrap into the range 0.0 to 1.0
     position = position - floorf(position);
-
     // Convert normalized position into a virtual LED index
     int index = (int)(position * totalLeds);
-
     if (index < FRONT_LEDS)
     {
         frontLeds[index] = colour;
@@ -430,7 +396,7 @@ void drawChaseSegment(CRGB* leds, int count,
         if (position >= progress &&
             position < progress + segmentWidth)
         {
-            leds[i] = CRGB(255, 255, 255);
+            leds[i] = CRGB(white);
         }
     }
 }
@@ -440,12 +406,9 @@ void chaos()
     const unsigned long blueDuration = 3000;
     const unsigned long yellowFlickerDuration = 3000;
     const unsigned long cycleDuration = barrageDuration + blueDuration + yellowFlickerDuration;
-    CRGB acidGreen = CRGB(180, 255, 0);
-    CRGB pink = CRGB(255, 60, 120);
     unsigned long elapsed = (millis() - chaosStartTime) % cycleDuration;
 
     FastLED.clear();
-
     if (elapsed < barrageDuration)
     {
         // PHASE 1: Pink barrage
@@ -482,7 +445,6 @@ void chaos()
         fill_solid(rearLeds, REAR_LEDS, CRGB::Yellow);
         fill_solid(leftLeds, LEFT_LEDS, CRGB::Yellow);
       }
-
 }
 void setup() {
 FastLED.addLeds<WS2815, FRONT_PIN, RGB>(frontLeds, FRONT_LEDS); //FRONT LEDS in caps is just the number of leds.
