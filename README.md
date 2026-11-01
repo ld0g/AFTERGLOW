@@ -47,3 +47,5 @@ More inputs need more modes, which were filled with CHAOS, BLACKOUT and KAWAII.
 Developed on a printer paper box with lights and a breadboard stuck to it. Many fun evenings were had playing about seeing how the effects work in the real world. Timings were tuned and fadeouts implemented to reduce jankiness.
 
 If you are installing AFTERGLOW, I would love to see the results. Please share your platforms, input choices, vehicles, builds. This doesn't even have to go on a car...
+
+Want AFTERGLOW installed professionally? I could do that too. I have a degree in electronic engineering and over a decade in high profile dealerships. DM me <3
