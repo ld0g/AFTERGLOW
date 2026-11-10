@@ -14,38 +14,43 @@ Hardware:
 -12V to 5V buck converter
 --TBC--
 
-Features:
--Separate 12 V and 5 V buses for LED power and Arduino power respectively
--OEM Subaru SI-DRIVE switch controls
--4 independent WS2815 LED strips
--short/long press behaviour
--configurable colours and brightness
--temporary animation overrides
--modular design with replaceable LED strips and failsafe
+Features:  
+-Separate 12 V and 5 V buses for LED power and Arduino power respectively  
+-OEM Subaru SI-DRIVE switch controls  
+-4 independent WS2815 LED strips  
+-short/long press behaviour  
+-configurable colours and brightness  
+-temporary animation overrides  
+-modular design with replaceable LED strips and failsafe  
 
-Lighting Modes:
-STEALTH - All lights off. Default mode.
-HELLO - A short rainbow welcome animation. Temporarily overrides all other modes.
-NORMAL - Static colour
-KAWAII - Static colour with blue bands slowly travelling front to rear
-CHAOS - A sequence of animated effects including strobes, perimeter chase. use with caution.
-BLACKOUT - Software lockout that disables all lighting effects until purposely disengaged with a 5-second PUSH input
+Lighting Modes:  
+STEALTH - All lights off. Default mode.  
+HELLO - A short rainbow welcome animation. Temporarily overrides all other modes.  
+NORMAL - Static colour  
+KAWAII - Static colour with blue bands slowly travelling front to rear  
+CHAOS - A sequence of animated effects including strobes, perimeter chase. use with caution.  
+BLACKOUT - Software lockout that disables all lighting effects until purposely disengaged with a 5-second PUSH input  
 
-Building and Uploading:
--Open the .ino file in Arduino IDE and configure your LED counts, data pins and input method
--Upload to your weapon of choice
--IMPORTANT: The LED strips require their own suitable 12V supply. Do not attempt to power them directly from the Arduino.
 
-Safety and intended use:
-AFTERGLOW is an experimental project intended for stationary use only at shows and meets. 
-Automotive electronics might not shock you, but the high current presents a significant fire risk (i know). ALWAYS use appropriate fuses and wire gauges.
+Building and Uploading:  
+-Open the .ino file in Arduino IDE and configure your LED counts, data pins and input method  
+-Upload to your weapon of choice  
+-IMPORTANT: The LED strips require their own suitable 12V supply. Do not attempt to power them directly from the Arduino. 
 
-About the project:
-What began as 'it would be fun to put pink lights under my new Subaru' quickly snowballed. 
-As the weeks went on, I had the idea to make use of the redundant OEM switch taking up unnecessary space in my centre console. Then came short and long press inputs to stretch the functionality of the switch. 
-More inputs need more modes, which were filled with CHAOS, BLACKOUT and KAWAII.
-Developed on a printer paper box with lights and a breadboard stuck to it. Many fun evenings were had playing about seeing how the effects work in the real world. Timings were tuned and fadeouts implemented to reduce jankiness.
+
+Safety and intended use:  
+AFTERGLOW is an experimental project intended for stationary use only at shows and meets.   
+Automotive electronics might not shock you, but the high current presents a significant fire risk (i know). ALWAYS use appropriate fuses and wire gauges.  
+
+
+About the project:  
+What began as 'it would be fun to put pink lights under my new Subaru' quickly snowballed.   
+As the weeks went on, I had the idea to make use of the redundant OEM switch taking up unnecessary space in my centre console. Then came short and long press inputs to stretch the functionality of the switch.   
+More inputs need more modes, which were filled with CHAOS, BLACKOUT and KAWAII.  
+Developed on a printer paper box with lights and a breadboard stuck to it. Many fun evenings were had playing about seeing how the effects work in the real world. Timings were tuned and fadeouts implemented to reduce  jankiness.
+
 
 If you are installing AFTERGLOW, I would love to see the results. Please share your platforms, input choices, vehicles, builds. This doesn't even have to go on a car...
 
-Want AFTERGLOW installed professionally? I could do that too. I have a degree in electronic engineering and over a decade in high profile dealerships. DM me <3
+
+Bill of Materials available here: https://docs.google.com/spreadsheets/d/e/2PACX-1vTIaVkaSId0hrcENt84Ni62hVzubEOdKIwOe27fYgGHZ9x7C3Fn4X1Z6HvcRz9bwQK1ABo7URfjNRKh/pubhtml?gid=0&single=true
