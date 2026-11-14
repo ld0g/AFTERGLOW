@@ -1,12 +1,11 @@
 # AFTERGLOW
 Arduino based 4-zone automotive addressable LED lighting controller
 
-AFTERGLOW takes inspiration from the underglow culture from the tuning scene of the early 2000s and implements the same idea with modern hardware.
-Originally developed for a Subaru Legacy BR9 Touring Wagon, AFTERGLOW replaces a conventional underglow controller (gross cheap remote) with the factory SI-DRIVE switch.
+AFTERGLOW takes inspiration from the underglow culture from the neon tubes of the early 2000s and implements the same idea with modern hardware.
+Originally developed for a Subaru Legacy BR9, AFTERGLOW replaces a conventional underglow controller (gross cheap remote) with the factory SI-DRIVE switch.
 
 Project status: 
-software - v0.7 NIGHTFALL. functionally complete firmware. 
-next milestone - AFTERGLOW v1.0 - hardware implementation on a real car and any final niggles fixed.
+AFTERGLOW v1.0 - hardware implementation on a real car and any final niggles fixed.
 
 Hardware:
 -Arduino Nano Every
